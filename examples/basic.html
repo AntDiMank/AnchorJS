@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anchor JS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../dist/anchor.css">
+  <style>
+    :root {
+      --ink: #ffffff;
+      --ink-soft: rgba(255, 255, 255, 0.72);
+      --line: rgba(255, 255, 255, 0.85);
+      --deep: #050505;
+      --rail: rgba(255, 255, 255, 0.22);
+      --rail-thumb: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Manrope", sans-serif;
+      background: var(--deep);
+      color: var(--ink);
+    }
+
+    .anchor-progress-track {
+      background: var(--rail);
+    }
+
+    .anchor-progress-thumb {
+      background: var(--rail-thumb);
+      box-shadow: 0 0 18px rgba(255, 255, 255, 0.55);
+    }
+
+    .anchor-tooltip {
+      color: #ffffff;
+      font-family: "Manrope", sans-serif;
+      letter-spacing: 0.14em;
+    }
+
+    .content > section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding: clamp(1.5rem, 4vw, 4rem);
+      padding-left: clamp(3.5rem, 8vw, 7rem);
+    }
+
+    .section-media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      background: #050505;
+    }
+
+    .section-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transform: scale(1.04);
+      animation: kenburns 16s ease-in-out infinite alternate;
+    }
+
+    .section-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(5, 5, 5, 0.88) 0%, rgba(5, 5, 5, 0.55) 42%, rgba(5, 5, 5, 0.25) 100%),
+        linear-gradient(0deg, rgba(5, 5, 5, 0.78) 0%, transparent 52%);
+      pointer-events: none;
+    }
+
+    .section-copy {
+      position: relative;
+      z-index: 1;
+      max-width: min(36rem, 92vw);
+      transform: translateY(12px);
+      opacity: 0;
+    }
+
+    section.is-anchor-active .section-copy,
+    section.anchor-anim-in .section-copy {
+      animation: rise-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.08s forwards;
+    }
+
+    section.is-anchor-active .eyebrow,
+    section.anchor-anim-in .eyebrow {
+      animation: fade-up 0.7s ease 0.05s forwards;
+    }
+
+    section.is-anchor-active .cta-row,
+    section.anchor-anim-in .cta-row {
+      animation: fade-up 0.75s ease 0.28s forwards;
+    }
+
+    .brand {
+      font-family: "Syne", sans-serif;
+      font-weight: 800;
+      font-size: clamp(3.2rem, 9vw, 6.8rem);
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 1rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      opacity: 0;
+    }
+
+    .headline {
+      font-family: "Syne", sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.9rem, 4.6vw, 3.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .lede {
+      font-size: clamp(0.98rem, 1.6vw, 1.12rem);
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 30rem;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-top: 1.75rem;
+      opacity: 0;
+    }
+
+    .cta {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      cursor: pointer;
+      text-decoration: none;
+      font: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.9rem 1.35rem;
+      color: #fff;
+      background: transparent;
+      border-radius: 999px;
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+
+    .cta:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .cta--solid {
+      color: #050505;
+      background: #ffffff;
+      border-color: #ffffff;
+    }
+
+    .cta--solid:hover {
+      background: #e8e8e8;
+    }
+
+    .scroll-hint {
+      position: fixed;
+      right: clamp(1rem, 3vw, 2rem);
+      bottom: clamp(1rem, 3vw, 2rem);
+      z-index: 20;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.45);
+      animation: pulse-soft 2.4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes kenburns {
+      from { transform: scale(1.04) translate3d(0, 0, 0); }
+      to { transform: scale(1.1) translate3d(-1%, -0.8%, 0); }
+    }
+
+    @keyframes rise-in {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse-soft {
+      0%, 100% { opacity: 0.35; }
+      50% { opacity: 0.8; }
+    }
+
+    @media (max-width: 767px) {
+      .content > section {
+        align-items: center;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+      }
+
+      .anchor-bar {
+        left: 12px;
+      }
+
+      .scroll-hint {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body class="anchor-site">
+  <div class="anchor-bar anchor-progress" aria-label="Section progress">
+    <span class="anchor-progress-track">
+      <span class="anchor-progress-thumb" id="anchor-thumb">
+        <span class="anchor-tooltip" id="anchor-tooltip">Hero</span>
+      </span>
+    </span>
+  </div>
+
+  <p class="scroll-hint">Scroll · Swipe · Drag</p>
+
+  <main class="content">
+    <section id="hero" aria-label="Hero">
+      <div class="section-media">
+        <img src="assets/hero.jpg" alt="Anchor JS full-screen section UI with progress rail" width="1920" height="1080" decoding="async">
+      </div>
+      <div class="section-copy">
+        <p class="eyebrow">Stancore · Section navigator</p>
+        <h1 class="brand">Anchor</h1>
+        <p class="lede">Same full-screen swipe rhythm as Stancore — one viewport, one section, progress on the rail.</p>
+        <div class="cta-row">
+          <a class="cta cta--solid" href="#swipe">See the swipe</a>
+          <a class="cta" href="https://github.com/AntDiMank/AnchorJS-Pure" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="swipe" aria-label="Swipe">
+      <div class="section-media">
+        <img src="assets/sections.jpg" alt="Section transition swipe between full-screen panels" width="1920" height="1080" decoding="async">
+      </div>
+      <div class="section-copy">
+        <p class="eyebrow">Wheel · Keys · Touch</p>
+        <h2 class="headline">Swipe the page.</h2>
+        <p class="lede">Discrete section changes with a 500&nbsp;ms lock — the motion people feel on stancore.net, packaged as a drop-in script.</p>
+      </div>
+    </section>
+
+    <section id="device" aria-label="Device">
+      <div class="section-media">
+        <img src="assets/navigate.jpg" alt="Laptop product shot of Anchor section navigation" width="1920" height="1080" decoding="async">
+      </div>
+      <div class="section-copy">
+        <p class="eyebrow">CDN or local files</p>
+        <h2 class="headline">Ship it anywhere.</h2>
+        <p class="lede">Declare <code style="color:#fff">sectionIds</code>, mount the thumb, load Anchor — the rail and swipe do the rest.</p>
+        <div class="cta-row">
+          <a class="cta cta--solid" href="https://api.stancore.net/docs/anchor-js" target="_blank" rel="noopener">API docs</a>
+          <a class="cta" href="https://cdn.jsdelivr.net/gh/AntDiMank/AnchorJS-Pure@main/dist/anchor.js" target="_blank" rel="noopener">Get script</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    var sectionIds = ['hero', 'swipe', 'device'];
+  </script>
+  <script src="../dist/anchor.js"></script>
+</body>
+</html>
