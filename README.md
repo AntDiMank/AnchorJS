@@ -1,7 +1,5 @@
 # Anchor JS
 
-[Русская версия](README.ru.md)
-
 Full-screen section navigation for the web. Replaces native page scrolling with discrete section switching, scroll locking, and a vertical progress indicator.
 
 Part of the [Stancore](https://stancore.net) ecosystem. Live API docs: [api.stancore.net/docs/anchor-js](https://api.stancore.net/docs/anchor-js).
