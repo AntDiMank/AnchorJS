@@ -7,13 +7,7 @@ Full-screen section navigation for the web. Replaces native page scrolling with 
 Part of the [Stancore](https://stancore.net) ecosystem. Live API docs: [api.stancore.net/docs/anchor-js](https://api.stancore.net/docs/anchor-js).
 
 <p align="center">
-  <img src="examples/assets/hero.jpg" alt="Anchor JS UI — full-screen section with progress rail" width="100%">
-</p>
-
-<p align="center">
-  <img src="examples/assets/sections.jpg" alt="Section swipe transition" width="49%">
-  &nbsp;
-  <img src="examples/assets/navigate.jpg" alt="Product shot — Anchor on a laptop" width="49%">
+  <img src="examples/assets/navigate.jpg" alt="Product shot — Anchor on a laptop" width="100%">
 </p>
 
 Open the live-style demo: [`examples/basic.html`](examples/basic.html) (scroll, swipe, or drag the rail).
