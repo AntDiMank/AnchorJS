@@ -32,7 +32,7 @@
 Добавьте разметку прогресс-бара и CSS (из этого репозитория или свои стили):
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/AntDiMank/AnchorJS-Pure@main/dist/anchor.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/AntDiMank/AnchorJS@main/dist/anchor.css">
 
 <div class="anchor-bar anchor-progress" aria-label="Индикатор секций">
   <span class="anchor-progress-track">
@@ -53,7 +53,7 @@ CDN скрипта: `https://api.stancore.net/api/anchor-js`
 jsDelivr (этот репозиторий):
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/AntDiMank/AnchorJS-Pure@main/dist/anchor.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/AntDiMank/AnchorJS@main/dist/anchor.js"></script>
 ```
 
 ## Быстрый старт — локальные файлы
