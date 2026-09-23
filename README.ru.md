@@ -7,13 +7,7 @@
 Часть экосистемы [Stancore](https://stancore.net). Живые API-доки: [api.stancore.net/docs/anchor-js](https://api.stancore.net/docs/anchor-js).
 
 <p align="center">
-  <img src="examples/assets/hero.jpg" alt="Anchor JS UI — полноэкранная секция с прогресс-рейлом" width="100%">
-</p>
-
-<p align="center">
-  <img src="examples/assets/sections.jpg" alt="Свайп между секциями" width="49%">
-  &nbsp;
-  <img src="examples/assets/navigate.jpg" alt="Продакт-шот Anchor на ноутбуке" width="49%">
+  <img src="examples/assets/sections.jpg" alt="Свайп между секциями" width="100%">
 </p>
 
 Визуальное демо: [`examples/basic.html`](examples/basic.html) (скролл, свайп или drag по рейлу).
